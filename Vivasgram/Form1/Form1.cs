@@ -12,6 +12,7 @@ using System.Threading;
 using System.Net.Sockets;
 using System.IO;
 using VivasGramm;
+using System.Net.NetworkInformation;
 
 namespace Form1
 {
@@ -55,61 +56,122 @@ namespace Form1
             }
         }
 
+        public bool IpValida(string ip)
+        {
+            bool correcto = true;
+
+            string [] partes = ip.Split('.');
+            char[] caracteres;
+
+            for (int i = 0; i < partes.Length; i++)
+            {
+                caracteres = partes[i].ToCharArray();
+
+                for (int j = 0; j < caracteres.Length; j++)
+                {
+                    if (!char.IsNumber(caracteres[j]))
+                    {
+                        correcto = false;
+                    }
+                }
+            }
+
+
+
+            return correcto;
+        }
+
+        public bool ComprobarPuerto(string puertoCadena)
+        {
+            bool correcto = true;
+            int puerto = Convert.ToInt32(puertoCadena);
+
+            IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties(); TcpConnectionInformation[] tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
+
+            TcpConnectionInformation[] tcpinfo = ipGlobalProperties.GetActiveTcpConnections();
+
+            foreach (TcpConnectionInformation tcpi in tcpinfo)
+            {
+                if (tcpi.LocalEndPoint.Port == puerto)
+                {
+                    correcto = false;
+                }
+            }
+
+            return correcto;
+        }
+
         void Conectar()
         {
             try
             {
-                if (bd.ComprobarUsuarioRegistrado(txtUsuario.Text, txtPass.Text))
+                if (IpValida(txtip.Text))
                 {
-                    client.Connect(txtip.Text, 8000);
-                    if (client.Connected)
+                    if (ComprobarPuerto(txtpuerto.Text))
                     {
-                        Thread t = new Thread(Listen);
+                        if (bd.ComprobarUsuarioRegistrado(txtUsuario.Text, txtPass.Text))
+                        {
+                            client.Connect(txtip.Text, Int32.Parse(txtpuerto.Text));
+                            if (client.Connected)
+                            {
+                                Thread t = new Thread(Listen);
 
-                        stream = client.GetStream();
-                        streamw = new StreamWriter(stream);
-                        streamr = new StreamReader(stream);
+                                stream = client.GetStream();
+                                streamw = new StreamWriter(stream);
+                                streamr = new StreamReader(stream);
 
-                        nick = txtUsuario.Text;
+                                nick = txtUsuario.Text;
 
-                        streamw.WriteLine(nick);
-                        streamw.Flush();
-                        streamw.WriteLine(pass);
-                        streamw.Flush();
+                                streamw.WriteLine(nick);
+                                streamw.Flush();
+                                streamw.WriteLine(pass);
+                                streamw.Flush();
 
-                        t.Start();
+                                t.Start();
 
-                        nick = txtUsuario.Text;
-                        listBox1.Visible = true;
-                        txtMensaje.Visible = true;
-                        btnEnviar.Visible = true;
-                        lblNombre.Visible = false;
-                        btnConectar.Visible = false;
-                        btnRegistrar.Visible = false;
-                        txtUsuario.Visible = false;
-                        lblWarning.Visible = false;
-                        lblContrasenha.Visible = false;
-                        txtPass.Visible = false;
-                        lblIp.Visible = false;
-                        lblPuerto.Visible = false;
-                        txtip.Visible = false;
-                        txtpuerto.Visible = false;
-                        this.AcceptButton = btnEnviar;
-                        this.Text = "Vivasgram";
-                        this.txtMensaje.Focus();
+                                nick = txtUsuario.Text;
+                                listBox1.Visible = true;
+                                txtMensaje.Visible = true;
+                                btnEnviar.Visible = true;
+                                lblNombre.Visible = false;
+                                btnConectar.Visible = false;
+                                btnRegistrar.Visible = false;
+                                txtUsuario.Visible = false;
+                                lblWarning.Visible = false;
+                                lblContrasenha.Visible = false;
+                                txtPass.Visible = false;
+                                lblIp.Visible = false;
+                                lblPuerto.Visible = false;
+                                txtip.Visible = false;
+                                txtpuerto.Visible = false;
+                                this.AcceptButton = btnEnviar;
+                                this.Text = "Vivasgram";
+                                this.txtMensaje.Focus();
 
+                            }
+                            else
+                            {
+
+                                MessageBox.Show("Servidor no Disponible");
+                            }
+                        }
+                        else
+                        {
+                            lblWarning.Text = "Usuario o contraseña incorrectos.\n" +
+                            "¿No está registrado?¡Presione el botón de registro!";
+                        }
                     }
                     else
                     {
-
-                        MessageBox.Show("Servidor no Disponible");
+                        lblwport.Text = "Puerto no \n disponible";
                     }
+                    
                 }
                 else
                 {
-                   lblWarning.Text = "Usuario o contraseña incorrectos.\n" +
-                   "¿No está registrado?¡Presione el botón de registro!";  
+                    lblwip.Text = "Ip incorrecta";
                 }
+                
                 
             }
             catch (Exception ex)
@@ -124,8 +186,12 @@ namespace Form1
             {
                 lblWarning.Text = "Usuario no válido";
             }
-            else
+            else if (txtip.Text == " " || txtpuerto.Text == " " || txtpuerto.Text.StartsWith(" ") || txtip.Text.StartsWith(" "))
             {
+                lblWarning.Text = " Introduce puerto o ip validos";
+            }
+            else
+            {   
                 Conectar();
             }
         }

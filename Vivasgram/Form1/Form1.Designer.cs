@@ -44,6 +44,8 @@ namespace Form1
             this.lblPuerto = new System.Windows.Forms.Label();
             this.txtip = new System.Windows.Forms.TextBox();
             this.txtpuerto = new System.Windows.Forms.TextBox();
+            this.lblwip = new System.Windows.Forms.Label();
+            this.lblwport = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox1
@@ -168,6 +170,22 @@ namespace Form1
             this.txtpuerto.Size = new System.Drawing.Size(177, 22);
             this.txtpuerto.TabIndex = 13;
             // 
+            // lblwip
+            // 
+            this.lblwip.AutoSize = true;
+            this.lblwip.Location = new System.Drawing.Point(294, 152);
+            this.lblwip.Name = "lblwip";
+            this.lblwip.Size = new System.Drawing.Size(0, 17);
+            this.lblwip.TabIndex = 14;
+            // 
+            // lblwport
+            // 
+            this.lblwport.AutoSize = true;
+            this.lblwport.Location = new System.Drawing.Point(297, 201);
+            this.lblwport.Name = "lblwport";
+            this.lblwport.Size = new System.Drawing.Size(0, 17);
+            this.lblwport.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnConectar;
@@ -175,6 +193,8 @@ namespace Form1
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(423, 403);
+            this.Controls.Add(this.lblwport);
+            this.Controls.Add(this.lblwip);
             this.Controls.Add(this.txtpuerto);
             this.Controls.Add(this.txtip);
             this.Controls.Add(this.lblPuerto);
@@ -216,6 +236,8 @@ namespace Form1
         private System.Windows.Forms.Label lblPuerto;
         private System.Windows.Forms.TextBox txtip;
         private System.Windows.Forms.TextBox txtpuerto;
+        private System.Windows.Forms.Label lblwip;
+        private System.Windows.Forms.Label lblwport;
     }
 }
 

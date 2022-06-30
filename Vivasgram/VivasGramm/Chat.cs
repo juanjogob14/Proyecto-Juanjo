@@ -83,7 +83,7 @@ namespace VivasGramm
                         {
                             try
                             {
-                                c.streamw.WriteLine(hcon.nick + ": " + mensaje.Trim());
+                                c.streamw.WriteLine(hcon.nick + ": " + mensaje);
 
                                 if (mensaje == "!usuarios")
                                 {

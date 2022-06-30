@@ -72,4 +72,3 @@ C:\Users\Juanjo\source\repos\Vivasgram\VivasGramm\obj\Debug\VivasGramm.csproj.Co
 C:\Users\Juanjo\source\repos\Vivasgram\VivasGramm\obj\Debug\VivasGramm.csproj.CopyComplete
 C:\Users\Juanjo\source\repos\Vivasgram\VivasGramm\obj\Debug\VivasGramm.exe
 C:\Users\Juanjo\source\repos\Vivasgram\VivasGramm\obj\Debug\VivasGramm.pdb
-C:\Users\Juanjo\source\repos\Vivasgram\VivasGramm\obj\Debug\VivasGramm.csprojAssemblyReference.cache
